@@ -1,11 +1,7 @@
 import axios from 'axios';
 
-const fallbackBaseURL = typeof window !== 'undefined' && window.location.hostname === 'localhost'
-  ? 'http://localhost:5000/api'
-  : '/api';
-
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || fallbackBaseURL
+  baseURL: import.meta.env.VITE_API_URL || (typeof window !== 'undefined' && window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api')
 });
 
 api.interceptors.request.use((config) => {
