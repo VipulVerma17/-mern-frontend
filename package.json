@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "axios": "^1.7.0",
+    "college-management-client": "file:..",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.21.0"
