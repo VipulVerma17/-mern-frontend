@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || (typeof window !== 'undefined' && window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api'),
+  baseURL: API_BASE_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -48,10 +50,12 @@ api.interceptors.response.use(
       });
     } else if (error.request) {
       // Request made but no response received
+      const requestUrl = `${error.config?.baseURL || ''}${error.config?.url || ''}`;
       return Promise.reject({
         status: 0,
-        message: 'No response from server. Please check your connection.',
+        message: `No response from server at ${requestUrl}. Please check your connection.`,
         errors: [],
+        url: requestUrl,
       });
     } else {
       // Error in request setup
